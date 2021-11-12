@@ -20,6 +20,7 @@ mongoose.connect('mongodb://localhost/promotions', {
 
     items.forEach(item => {
       list.push({
+        title: item.querySelector('.td-module-title a').innerHTML,
         promotion: item.querySelector('.td-module-title a').innerHTML,
         category: item.querySelector('.td-post-category').innerHTML,
         link: item.querySelector('.td-module-title a').getAttribute('href')
@@ -28,6 +29,7 @@ mongoose.connect('mongodb://localhost/promotions', {
     return list
   })
 
+  // console.log(data)
   insertPromosInDB(data)
 
   await browser.close()
@@ -35,10 +37,30 @@ mongoose.connect('mongodb://localhost/promotions', {
 
 function insertPromosInDB(promos) {
   promos.forEach(async promo => {
+    //promo['promotion'] = slugify(promo.promotion)
     if (!(await Promotion.findOne({ promotion: promo.promotion }))) {
       await Promotion.create(promo)
     }
   })
+}
+
+function slugify(str) {
+  str = str.replace(/^\s+|\s+$/g, '') // trim
+  str = str.toLowerCase()
+
+  // remove accents, swap ñ for n, etc
+  var from = 'ãàáäâáº½èéëêìíïîõòóöôùúüûñç·/_,:;'
+  var to = 'aaaaaeeeeeiiiiooooouuuunc------'
+  for (var i = 0, l = from.length; i < l; i++) {
+    str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i))
+  }
+
+  str = str
+    .replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+    .replace(/\s+/g, '-') // collapse whitespace and replace by -
+    .replace(/-+/g, '-') // collapse dashes
+
+  return str
 }
 
 /*

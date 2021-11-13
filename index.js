@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer')
 const mongoose = require('mongoose')
 const Promotion = require('./models/Promotion')
 
-mongoose.connect('mongodb://localhost/promotions', {
+mongoose.connect('mongodb://localhost:27017/promotions', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
@@ -21,7 +21,6 @@ mongoose.connect('mongodb://localhost/promotions', {
     items.forEach(item => {
       list.push({
         title: item.querySelector('.td-module-title a').innerHTML,
-        promotion: item.querySelector('.td-module-title a').innerHTML,
         category: item.querySelector('.td-post-category').innerHTML,
         link: item.querySelector('.td-module-title a').getAttribute('href')
       })
@@ -37,7 +36,7 @@ mongoose.connect('mongodb://localhost/promotions', {
 
 function insertPromosInDB(promos) {
   promos.forEach(async promo => {
-    //promo['promotion'] = slugify(promo.promotion)
+    promo['promotion'] = slugify(promo.title)
     if (!(await Promotion.findOne({ promotion: promo.promotion }))) {
       await Promotion.create(promo)
     }

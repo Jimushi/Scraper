@@ -6,7 +6,7 @@ const PromotionSchema = new mongoose.Schema(
     promotion: String,
     category: String,
     link: String,
-    sent: Boolean
+    sent: { type: Boolean, default: false }
   },
   { timestamps: true }
 )

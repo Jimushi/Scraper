@@ -68,30 +68,49 @@ function slugify(str) {
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] })
 
 // When the client is ready, run this code (only once)
-client.once('ready', () => {
+client.once('ready', async send => {
   console.log('Ready!')
+  const list = await linkReturn()
+  const channel = client.channels.cache.get('911340226033635388')
+  for (let i = 0; i < list.length; i++) {
+    channel.send(`list${list[i]['link']}`)
+  }
+  await Promotion.updateMany({ sent: false }, { sent: true })
 })
 
 client.on('interactionCreate', async interaction => {
   if (!interaction.isCommand()) return
 
   const { commandName } = interaction
+  if (commandName === 'server') {
+    var arr = ['ai não', 'xau', 'não sei', 'só se for na playstation']
 
-  if (commandName === 'ping') {
-    await interaction.reply('Pong!')
-  } else if (commandName === 'server') {
-    await interaction.reply(
-      `Server name: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`
-    )
-  } else if (commandName === 'user') {
-    await interaction.reply(
-      `Your tag: ${interaction.user.tag}\nYour id: ${interaction.user.id}`
-    )
+    var randIndex = arr[Math.floor(Math.random() * arr.length)]
+
+    await interaction.reply(`Jimmy says: ${randIndex}`)
   }
 })
 
 // Login to Discord with your client's token
 client.login(token)
+
+async function linkReturn() {
+  return await Promotion.find(
+    {
+      sent: false
+    },
+    {
+      _id: 0,
+      promotion: 0,
+      category: 0,
+      title: 0,
+      createdAt: 0,
+      updatedAt: 0,
+      __v: 0,
+      sent: 0
+    }
+  )
+}
 
 /*
 async function run() {

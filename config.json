@@ -1,5 +1,6 @@
 {
   "clientId": "712037563132805202",
   "guildId": "143361209591136256",
-  "token": "NzEyMDM3NTYzMTMyODA1MjAy.XsLuqA.8ezI_ved7Hyl27MPQxugKXoEPpY"
+  "token": "NzEyMDM3NTYzMTMyODA1MjAy.XsLuqA.8ezI_ved7Hyl27MPQxugKXoEPpY",
+  "dblink": "mongodb+srv://Jimushi:8LBaujJqvtVWv5J@cluster0.9oz4y.mongodb.net/promotions?retryWrites=true&w=majority"
 }

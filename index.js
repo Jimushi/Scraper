@@ -3,9 +3,9 @@ const mongoose = require('mongoose')
 const Promotion = require('./models/Promotion')
 // Require the necessary discord.js classes
 const { Client, Intents } = require('discord.js')
-const { token } = require('./config.json')
+const { token, dblink } = require('./config.json')
 
-mongoose.connect('mongodb://localhost:27017/promotions', {
+mongoose.connect(dblink, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })

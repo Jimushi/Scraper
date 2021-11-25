@@ -1,9 +1,12 @@
+console.log('start:')
 const puppeteer = require('puppeteer')
 const mongoose = require('mongoose')
 const Promotion = require('./models/Promotion')
 // Require the necessary discord.js classes
 const { Client, Intents } = require('discord.js')
 const { token, dblink } = require('./config.json')
+
+console.log('constant loader:' + token)
 
 mongoose.connect(dblink, {
   useNewUrlParser: true,
@@ -92,6 +95,7 @@ client.on('interactionCreate', async interaction => {
 })
 
 // Login to Discord with your client's token
+
 client.login(token)
 
 async function linkReturn() {
